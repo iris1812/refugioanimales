@@ -60,9 +60,9 @@ void Animal::setDisponible(bool valor) {
 
 void Animal::mostrarInfo() const {
     cout << "ID: " << id
-         << " | Nombre: " << nombre
-         << " | Edad: " << edad
-         << " | Salud: " << estadoSalud
-         << " | Disponible: " << (disponibleAdopcion ? "Si" : "No")
-         << endl;
+        << " | Nombre: " << nombre
+        << " | Edad: " << edad
+        << " | Salud: " << estadoSalud
+        << " | Disponible: " << (disponibleAdopcion ? "Si" : "No")
+        << endl;
 }
