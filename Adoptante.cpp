@@ -1,4 +1,3 @@
-//Adoptante.cpp
 #include <iostream>
 #include "Adoptante.h"
 

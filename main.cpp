@@ -1,6 +1,4 @@
-
 #include "menu.h"
-
 int main() {
     int opcion;   // guardar la opción que elige
     do {

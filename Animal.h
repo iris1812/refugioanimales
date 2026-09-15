@@ -1,4 +1,4 @@
-// Animal.h
+
 #ifndef ANIMAL_H
 #define ANIMAL_H
 
@@ -7,8 +7,7 @@ using namespace std;
 
 class Animal {
 private:
-    // "private" = solo funciones DE ESTA CLASE pueden tocar estos atributos
-    // directamente. Es el "encapsulamiento" que pide la Fase 2.
+    // "private" = solo funciones DE ESTA CLASE pueden tocar estos atributo directamente.
     int id;
     string nombre;
     int edad;
@@ -16,7 +15,6 @@ private:
     bool disponibleAdopcion; // true = se puede adoptar, false = no
 
 public:
-    // --- Constructores ---
 
     // 1) Constructor por defecto: se usa si escribís  Animal a;
     Animal();
@@ -27,29 +25,26 @@ public:
 
     // 3) Constructor de copia: se usa si escribís
     //    Animal b(a);   (crea b copiando los datos de a)
-    // Recibe una REFERENCIA CONSTANTE: "const Animal &otro" significa
-    // "te paso el objeto original sin copiarlo de más, y prometo no modificarlo".
+    // Recibe una REFERENCIA CONSTANTE: "const Animal &otro" significa "te paso el objeto original sin copiarlo de más, y prometo no modificarlo".
     Animal(const Animal &otro);
 
     // --- Destructor ---
     // Se llama automáticamente cuando el objeto se destruye.
-    // Por ahora Animal no tiene memoria dinámica propia, así que
-    // el destructor no necesita liberar nada especial todavía.
+    // Por ahora Animal no tiene memoria dinámica propia, así que el destructor no necesita liberar nada especial todavía.
     ~Animal();
 
-    // --- Getters (leer un atributo privado desde afuera) ---
+    //(leer un atributo privado desde afuera)
     int getId() const;
     string getNombre() const;
     int getEdad() const;
     string getEstadoSalud() const;
     bool getDisponible() const;
 
-    // --- Setters (modificar un atributo privado desde afuera, con control) ---
+    //(modificar un atributo privado desde afuera, con control) ---
     void setEstadoSalud(string nuevoEstado);
     void setDisponible(bool valor);
 
-    // Función que en la Fase 4 vamos a volver "virtual" para el polimorfismo.
-    // Por ahora es una función común.
+    // Función
     void mostrarInfo() const;
 };
 

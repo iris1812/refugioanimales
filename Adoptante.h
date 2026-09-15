@@ -1,4 +1,4 @@
-// Adoptante.h
+
 #ifndef ADOPTANTE_H
 #define ADOPTANTE_H
 
