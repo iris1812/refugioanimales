@@ -1,10 +1,9 @@
-
 #include <iostream>
 #include "Refugio.h"
 
 using namespace std;
 
-// Constructor por defecto
+// Constructor
 Refugio::Refugio() {
     cantidad = 0;
     capacidad = 5;
@@ -21,27 +20,27 @@ Refugio::~Refugio() {
 // Agregar un animal
 void Refugio::agregarAnimal(const Animal& animal) {
 
-    // Si la colección está llena, aumentamos su capacidad
+    // Si la colección está llena, aumentar la capacidad
     if (cantidad == capacidad) {
 
         int nuevaCapacidad = capacidad * 2;
 
         Animal* nuevosAnimales = new Animal[nuevaCapacidad];
 
-        // Copiamos los animales a la nueva colección
+        // Copiar los animales anteriores
         for (int i = 0; i < cantidad; i++) {
             *(nuevosAnimales + i) = *(animales + i);
         }
 
-        // Liberamos la memoria anterior
+        // Liberar la memoria anterior
         delete[] animales;
 
-        // Actualizamos el puntero y la capacidad
+        // Actualizar el puntero y la capacidad
         animales = nuevosAnimales;
         capacidad = nuevaCapacidad;
     }
 
-    // Agregamos el nuevo animal
+    // Agregar el nuevo animal usando aritmética de punteros
     *(animales + cantidad) = animal;
 
     cantidad++;

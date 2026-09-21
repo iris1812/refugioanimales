@@ -1,4 +1,3 @@
-
 #ifndef REFUGIO_H
 #define REFUGIO_H
 
@@ -11,9 +10,13 @@ private:
     int capacidad;
 
 public:
+    // Constructor
     Refugio();
+
+    // Destructor
     ~Refugio();
 
+    // Métodos
     void agregarAnimal(const Animal& animal);
     void mostrarAnimales() const;
 };
