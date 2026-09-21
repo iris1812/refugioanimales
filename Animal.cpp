@@ -60,3 +60,12 @@ void Animal::mostrarInfo() const {
         << " Disponible: " << (disponibleAdopcion ? "Si" : "No")
         << endl;
 }
+bool Animal::operator==(const Animal& otro) const {
+    return this->id == otro.id;
+}
+
+// Sobrecarga de ! : Devuelve true si el animal NO está disponible
+bool Animal::operator!() const {
+    return !this->disponibleAdopcion; 
+    // Si disponibleAdopcion es false (no disponible), !false se vuelve true.
+}

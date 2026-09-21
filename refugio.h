@@ -24,6 +24,14 @@ public:
     // Métodos
     void agregarAnimal(const Animal& animal);
     void mostrarAnimales() const;
+    Refugio& operator=(const Refugio& otro);
+
+    // 2. Sobrecarga de corchetes [] para acceso por posición
+    Animal& operator[](int indice);
+
+    // 3. Sobrecarga de paréntesis () para búsqueda por ID
+    // Retorna un puntero al animal si lo encuentra, o nullptr si no existe
+    Animal* operator()(int idBuscado); 
 };
 
 #endif

@@ -46,6 +46,11 @@ public:
 
     // Función
     void mostrarInfo() const;
+    // Sobrecarga del operador == para comparar por ID
+    bool operator==(const Animal& otro) const;
+
+    // Sobrecarga del operador unario ! para ver si NO está disponible
+    bool operator!() const;
 };
 
 #endif
