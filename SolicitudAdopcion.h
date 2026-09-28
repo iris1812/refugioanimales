@@ -2,6 +2,7 @@
 #define SOLICITUDADOPCION_H
 
 #include <string>
+#include <memory>
 #include "Adoptante.h"
 #include "Animal.h"
 
@@ -11,7 +12,7 @@ class SolicitudAdopcion {
 private:
     int idSolicitud;
     Adoptante solicitante;      // Usamos la clase que ya creaste
-    Animal animalSolicitado;    // Usamos la clase que ya creaste
+    unique_ptr<Animal> animalSolicitado;
     string estado;              // Ej: "En revisión", "Aprobada", "Rechazada"
 
 public:
@@ -19,10 +20,11 @@ public:
     SolicitudAdopcion();
 
     // 2. Constructor parametrizado
-    SolicitudAdopcion(int id, Adoptante adoptanteParam, Animal animalParam, string estadoParam);
+    SolicitudAdopcion(int id, const Adoptante& adoptanteParam, const Animal& animalParam, string estadoParam);
 
     // 3. Constructor de copia
     SolicitudAdopcion(const SolicitudAdopcion &otra);
+    SolicitudAdopcion& operator=(const SolicitudAdopcion& otra);
 
     // 4. Destructor
     ~SolicitudAdopcion();

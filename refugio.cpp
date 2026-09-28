@@ -1,5 +1,6 @@
 #include <iostream>
-#include "Refugio.h"
+#include <stdexcept>
+#include "refugio.h"
 
 using namespace std;
 
@@ -8,11 +9,42 @@ Refugio::Refugio() {
     cantidad = 0;
     capacidad = 5;
 
-    animales = new Animal[capacidad];
+    animales = new Animal*[capacidad]();
+}
+
+Refugio::Refugio(int capacidadInicial) {
+    cantidad = 0;
+    capacidad = capacidadInicial > 0 ? capacidadInicial : 5;
+    animales = new Animal*[capacidad]();
+}
+
+Refugio::Refugio(const Refugio& otro)
+        : cantidad(otro.cantidad), capacidad(otro.capacidad),
+            adoptantes(otro.adoptantes), solicitudes(otro.solicitudes) {
+    animales = new Animal*[capacidad]();
+
+    for (int i = 0; i < cantidad; i++) {
+        animales[i] = otro.animales[i]->clone();
+    }
+}
+
+Refugio& Refugio::operator=(const Refugio& otro) {
+    if (this != &otro) {
+        Refugio copia(otro);
+        std::swap(animales, copia.animales);
+        std::swap(cantidad, copia.cantidad);
+        std::swap(capacidad, copia.capacidad);
+        adoptantes = copia.adoptantes;
+        solicitudes = copia.solicitudes;
+    }
+    return *this;
 }
 
 // Destructor
 Refugio::~Refugio() {
+    for (int i = 0; i < cantidad; i++) {
+        delete animales[i];
+    }
     delete[] animales;
     animales = nullptr;
 }
@@ -25,11 +57,11 @@ void Refugio::agregarAnimal(const Animal& animal) {
 
         int nuevaCapacidad = capacidad * 2;
 
-        Animal* nuevosAnimales = new Animal[nuevaCapacidad];
+        Animal** nuevosAnimales = new Animal*[nuevaCapacidad]();
 
         // Copiar los animales anteriores
         for (int i = 0; i < cantidad; i++) {
-            *(nuevosAnimales + i) = *(animales + i);
+            nuevosAnimales[i] = animales[i];
         }
 
         // Liberar la memoria anterior
@@ -41,7 +73,7 @@ void Refugio::agregarAnimal(const Animal& animal) {
     }
 
     // Agregar el nuevo animal usando aritmética de punteros
-    *(animales + cantidad) = animal;
+    animales[cantidad] = animal.clone();
 
     cantidad++;
 }
@@ -53,53 +85,75 @@ void Refugio::mostrarAnimales() const {
 
     for (int i = 0; i < cantidad; i++) {
 
-        (animales + i)->mostrarInfo();
+        animales[i]->mostrarInfo();
     }
-}
-
-// 1. Sobrecarga del operador de asignación (=) para Deep Copy
-Refugio& Refugio::operator=(const Refugio& otro) {
-    // Evitar la autoasignación (ej: miRefugio = miRefugio)
-    if (this == &otro) {
-        return *this;
-    }
-
-    // Liberar la memoria actual del objeto que recibe la asignación
-    delete[] this->animales;
-
-    // Copiar los atributos simples
-    this->cantidad = otro.cantidad;
-    this->capacidad = otro.capacidad;
-
-    // Asignar nueva memoria y copiar los elementos
-    this->animales = new Animal[this->capacidad];
-    for (int i = 0; i < this->cantidad; i++) {
-        *(this->animales + i) = *(otro.animales + i); 
-    }
-
-    return *this; // Retornamos el objeto actual para permitir asignaciones en cadena (a = b = c)
 }
 
 // 2. Sobrecarga de corchetes [] (Acceso por posición)
 Animal& Refugio::operator[](int indice) {
-    // Validar que el índice esté dentro del rango
     if (indice < 0 || indice >= cantidad) {
-        std::cerr << "Error: Indice fuera de rango." << std::endl;
-        // Para evitar crashes inmediatos, devolvemos el primero o manejamos el error.
-        return *animales; 
+        throw out_of_range("Indice de animal fuera de rango");
     }
-    // Retornamos el animal usando aritmética de punteros (o animales[indice])
-    return *(animales + indice);
+    return *animales[indice];
+}
+
+const Animal& Refugio::operator[](int indice) const {
+    if (indice < 0 || indice >= cantidad) {
+        throw out_of_range("Indice de animal fuera de rango");
+    }
+    return *animales[indice];
 }
 
 // 3. Sobrecarga de paréntesis () (Búsqueda por ID)
 Animal* Refugio::operator()(int idBuscado) {
     for (int i = 0; i < cantidad; i++) {
-        // Usamos el operador == que sobrecargaste en la clase Animal
-        // o directamente comparamos los IDs.
-        if ((animales + i)->getId() == idBuscado) {
-            return (animales + i); // Retorna el puntero al animal encontrado
+        if (animales[i]->getId() == idBuscado) {
+            return animales[i];
         }
     }
-    return nullptr; // Si no lo encuentra, retorna un puntero nulo
+    return nullptr;
+}
+
+const Animal* Refugio::operator()(int idBuscado) const {
+    for (int i = 0; i < cantidad; i++) {
+        if (animales[i]->getId() == idBuscado) {
+            return animales[i];
+        }
+    }
+    return nullptr;
+}
+
+void Refugio::agregarAdoptante(const Adoptante& adoptante) {
+    adoptantes.push_back(adoptante);
+}
+
+Adoptante* Refugio::buscarAdoptante(int id) {
+    for (Adoptante& adoptante : adoptantes) {
+        if (adoptante.getId() == id) {
+            return &adoptante;
+        }
+    }
+    return nullptr;
+}
+
+bool Refugio::crearSolicitud(int idSolicitud, int idAdoptante, int idAnimal) {
+    Adoptante* adoptante = buscarAdoptante(idAdoptante);
+    Animal* animal = (*this)(idAnimal);
+    if (adoptante == nullptr || animal == nullptr || !animal->getDisponible()) {
+        return false;
+    }
+
+    solicitudes.emplace_back(idSolicitud, *adoptante, *animal, "Pendiente");
+    animal->setDisponible(false);
+    return true;
+}
+
+void Refugio::mostrarSolicitudes() const {
+    if (solicitudes.empty()) {
+        cout << "No hay solicitudes registradas." << endl;
+        return;
+    }
+    for (const SolicitudAdopcion& solicitud : solicitudes) {
+        solicitud.mostrarSolicitud();
+    }
 }

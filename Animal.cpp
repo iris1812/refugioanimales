@@ -35,7 +35,6 @@ Animal::Animal(const Animal &otro) {
 }
 
 Animal::~Animal() {
-    // Vacío por ahora: no hay memoria dinámica propia que liberar.
 }
 
 int Animal::getId() const { return id; }

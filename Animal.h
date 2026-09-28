@@ -31,7 +31,7 @@ public:
     // --- Destructor ---
     // Se llama automáticamente cuando el objeto se destruye.
     // Por ahora Animal no tiene memoria dinámica propia, así que el destructor no necesita liberar nada especial todavía.
-    ~Animal();
+    virtual ~Animal();
 
     //(leer un atributo privado desde afuera)
     int getId() const;
@@ -45,7 +45,8 @@ public:
     void setDisponible(bool valor);
 
     // Función
-    void mostrarInfo() const;
+    virtual void mostrarInfo() const;
+    virtual Animal* clone() const = 0;
     // Sobrecarga del operador == para comparar por ID
     bool operator==(const Animal& otro) const;
 
