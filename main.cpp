@@ -26,6 +26,9 @@ int main() {
             case 7:
                 mostrarHistorial();
                 break;
+            case 8:
+                mostrarSolicitudes();
+                break;
             case 0:
                 // No hacemos nada acá: el "0" corta el do-while más abajo.
                 break;

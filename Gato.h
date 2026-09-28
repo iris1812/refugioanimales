@@ -6,10 +6,10 @@
 class Gato : public Animal {
 private:
     string color;
-    bool usaArenero;
+    bool interior;
 
 public:
-    Gato(int id, string nombre, int edad, string salud, string color, bool usaArenero);
+    Gato(int id, string nombre, int edad, string salud, string color, bool interior);
     void mostrarInfo() const override;
     Animal* clone() const override;
 };

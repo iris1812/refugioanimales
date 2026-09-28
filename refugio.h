@@ -15,6 +15,7 @@ private:
     int capacidad;
     vector<Adoptante> adoptantes;
     vector<SolicitudAdopcion> solicitudes;
+    vector<string> historial;
 
 public:
     // ConstructoresFase 2
@@ -27,11 +28,17 @@ public:
 
     // Métodos
     void agregarAnimal(const Animal& animal);
+    void mostrardisponibles() const;
     void mostrarAnimales() const;
     void agregarAdoptante(const Adoptante& adoptante);
     Adoptante* buscarAdoptante(int id);
     bool crearSolicitud(int idSolicitud, int idAdoptante, int idAnimal);
     void mostrarSolicitudes() const;
+    bool confirmarSolicitud(int idSolicitud);
+    bool cancelarSolicitud(int idSolicitud);
+    bool devolverAnimal(int idAnimal);
+    void mostrarHistorial() const;
+
     Refugio& operator=(const Refugio& otro);
 
     // 2. Sobrecarga de corchetes [] para acceso por posición

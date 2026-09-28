@@ -13,5 +13,6 @@ void buscarAnimalPorId();
 void gestionarSolicitud();
 void devolverAnimal();
 void mostrarHistorial();
+void mostrarSolicitudes();
 
 #endif

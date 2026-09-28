@@ -35,6 +35,8 @@ public:
 
     // Método para imprimir
     void mostrarSolicitud() const;
+    void setEstado(string nuevoEstado);
+    int getIdAnimal() const;
 };
 
 #endif

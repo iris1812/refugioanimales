@@ -23,6 +23,7 @@ void mostrarMenu() {
     cout << "5. Gestionar solicitud de adopcion" << endl;
     cout << "6. Devolver animal a disponible" << endl;
     cout << "7. Mostrar historial" << endl;
+    cout << "8. Mostrar solicitudes" << endl;
     cout << "0. Salir" << endl;
     cout << "Elegi una opcion: ";
 }
@@ -62,28 +63,38 @@ void registrarAnimal() {
 
     if (tipo == 1) {
         string raza;
-        int entrenado;
+        string tamanio;
         cout << "Raza: ";
         getline(cin >> ws, raza);
-        cout << "Entrenado (1 si, 0 no): ";
-        cin >> entrenado;
-        Perro perro(id, nombre, edad, salud, raza, entrenado != 0);
+        cout << "Tamaño: ";
+        getline(cin >> ws, tamanio);
+        Perro perro(id, nombre, edad, salud, raza, tamanio);
         refugio.agregarAnimal(perro);
     } else {
         string color;
-        int usaArenero;
+        int interior;
         cout << "Color: ";
         getline(cin >> ws, color);
-        cout << "Usa arenero (1 si, 0 no): ";
-        cin >> usaArenero;
-        Gato gato(id, nombre, edad, salud, color, usaArenero != 0);
+        cout << "Es de Interior (1 si, 0 no): ";
+        cin >> interior;
+        Gato gato(id, nombre, edad, salud, color, interior != 0);
         refugio.agregarAnimal(gato);
     }
     cout << "Animal registrado." << endl;
 }
 
 void listarAnimales() {
-    refugio.mostrarAnimales();
+    int filtro;
+    cout << "1. Todos\n2. Solo disponibles\nOpcion: ";
+    cin >> filtro;
+
+    if (filtro == 1) {
+        refugio.mostrarAnimales();
+    } else if (filtro == 2) {
+        refugio.mostrardisponibles();
+    } else {
+        cout << "Opcion invalida." << endl;
+    }
 }
 
 void registrarAdoptante() {
@@ -123,34 +134,69 @@ void buscarAnimalPorId() {
 }
 
 void gestionarSolicitud() {
-    int idAdoptante;
-    int idAnimal;
-    cout << "ID del adoptante: ";
-    cin >> idAdoptante;
-    cout << "ID del animal: ";
-    cin >> idAnimal;
+    int accion;
+    cout << "1. Crear\n2. Confirmar\n3. Cancelar\nOpcion: ";
+    cin >> accion;
 
-    if (refugio.crearSolicitud(siguienteSolicitud, idAdoptante, idAnimal)) {
-        cout << "Solicitud " << siguienteSolicitud << " registrada." << endl;
-        siguienteSolicitud++;
+    if (accion == 1) {
+        int idAdoptante;
+        int idAnimal;
+        cout << "ID del adoptante: ";
+        cin >> idAdoptante;
+        cout << "ID del animal: ";
+        cin >> idAnimal;
+
+        if (refugio.crearSolicitud(siguienteSolicitud, idAdoptante, idAnimal)) {
+            cout << "Solicitud " << siguienteSolicitud << " registrada." << endl;
+            siguienteSolicitud++;
+        } else {
+            cout << "No se pudo crear la solicitud. Verifica los IDs y la disponibilidad." << endl;
+        }
+    } else if (accion == 2) {
+        int idSolicitud;
+        refugio.mostrarSolicitudes();
+        cout << "Numero de solicitud a confirmar: ";
+        cin >> idSolicitud;
+
+        if (refugio.confirmarSolicitud(idSolicitud)) {
+            cout << "Adopcion confirmada." << endl;
+        } else {
+            cout << "No se pudo confirmar. La solicitud no existe o no esta pendiente." << endl;
+        }
+    } else if (accion == 3) {
+        int idSolicitud;
+        refugio.mostrarSolicitudes();
+        cout << "Numero de solicitud a cancelar: ";
+        cin >> idSolicitud;
+
+        if (refugio.cancelarSolicitud(idSolicitud)) {
+            cout << "Solicitud cancelada. El animal vuelve a estar disponible." << endl;
+        } else {
+            cout << "No se pudo cancelar. La solicitud no existe o no esta pendiente." << endl;
+        }
     } else {
-        cout << "No se pudo crear la solicitud. Verifica los IDs y la disponibilidad." << endl;
+        cout << "Opcion invalida." << endl;
     }
 }
-
 void devolverAnimal() {
     int id;
     cout << "ID del animal a devolver: ";
     cin >> id;
-    Animal* animal = refugio(id);
-    if (animal == nullptr) {
+
+    if (refugio(id) == nullptr) {
         cout << "No se encontro ese animal." << endl;
         return;
     }
-    animal->setDisponible(true);
+    if (!refugio.devolverAnimal(id)) {
+        cout << "Ese animal no fue adoptado." << endl;
+        return;
+    }
     cout << "El animal vuelve a estar disponible." << endl;
 }
-
 void mostrarHistorial() {
+    refugio.mostrarHistorial();
+}
+
+void mostrarSolicitudes() {
     refugio.mostrarSolicitudes();
 }

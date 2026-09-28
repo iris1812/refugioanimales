@@ -1,13 +1,13 @@
 #include <iostream>
 #include "Perro.h"
 
-Perro::Perro(int id, string nombre, int edad, string salud, string raza, bool entrenado)
-    : Animal(id, nombre, edad, salud), raza(raza), entrenado(entrenado) {}
+Perro::Perro(int id, string nombre, int edad, string salud, string raza, string tamanio)
+    : Animal(id, nombre, edad, salud), raza(raza), tamanio(tamanio) {}
 
 void Perro::mostrarInfo() const {
     Animal::mostrarInfo();
     std::cout << "  Tipo: Perro | Raza: " << raza
-              << " | Entrenado: " << (entrenado ? "Si" : "No") << std::endl;
+              << " | Tamaño: " << tamanio << std::endl;
 }
 
 Animal* Perro::clone() const {

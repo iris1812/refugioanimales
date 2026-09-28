@@ -60,3 +60,13 @@ void SolicitudAdopcion::mostrarSolicitud() const {
         animalSolicitado->mostrarInfo();
     }
 }
+void SolicitudAdopcion::setEstado(string nuevoEstado) {
+    estado = nuevoEstado;
+}
+
+int SolicitudAdopcion::getIdAnimal() const {
+    if (animalSolicitado == nullptr) {
+        return -1;
+    }
+    return animalSolicitado->getId();
+}
