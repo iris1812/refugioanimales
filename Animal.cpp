@@ -1,7 +1,8 @@
 
 #include <iostream>
 #include "Animal.h"
-
+int Animal::instanciasVivas = 0;
+int Animal::getInstanciasVivas() { return instanciasVivas; }
 // Fijate la sintaxis: "Animal::Animal()" significa "el constructor por defecto, QUE PERTENECE a la clase Animal".
 // El "::" se llama "operador de resolución de ámbito": conecta el nombre de la clase con el nombre de la función.
 
@@ -12,6 +13,7 @@ Animal::Animal() {
     edad = 0;
     estadoSalud = "Desconocido";
     disponibleAdopcion = true;
+    instanciasVivas++;
 }
 
 Animal::Animal(int idParam, string nombreParam, int edadParam, string estadoParam) {
@@ -22,6 +24,7 @@ Animal::Animal(int idParam, string nombreParam, int edadParam, string estadoPara
     edad = edadParam;
     estadoSalud = estadoParam;
     disponibleAdopcion = true; // todo animal nuevo arranca disponible
+    instanciasVivas++;
 }
 
 Animal::Animal(const Animal &otro) {
@@ -32,9 +35,11 @@ Animal::Animal(const Animal &otro) {
     edad = otro.edad;
     estadoSalud = otro.estadoSalud;
     disponibleAdopcion = otro.disponibleAdopcion;
+    instanciasVivas++;
 }
 
 Animal::~Animal() {
+    instanciasVivas--;
 }
 
 int Animal::getId() const { return id; }

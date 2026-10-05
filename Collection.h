@@ -2,7 +2,11 @@
 #define COLLECTION_H
 
 #include <vector>
-#include <stdexcept>
+#include "Excepciones.h"
+
+// Cada instanciacion (Collection<int>, Collection<string>...) es una clase
+// distinta generada por el compilador, por eso cada una tiene SU PROPIO
+// contador cantidadColecciones.
 
 template <typename T>
 class Collection
@@ -19,6 +23,20 @@ public:
     Collection()
     {
         cantidadColecciones++;
+    }
+
+    // Constructor de copia: también es una colección nueva, así que suma
+    Collection(const Collection& otra) : elementos(otra.elementos)
+    {
+        cantidadColecciones++;
+    }
+
+    Collection& operator=(const Collection& otra) = default;
+
+    // Devuelve true si la colección no tiene elementos
+    bool vacia() const
+    {
+        return elementos.empty();
     }
 
     // Agregar un elemento
@@ -38,9 +56,8 @@ public:
     {
         if (indice < 0 || indice >= cantidad())
         {
-            throw std::out_of_range("Indice fuera de rango en Collection");
+            throw IndiceInvalidoException(indice);
         }
-
         return elementos[indice];
     }
 
@@ -49,9 +66,8 @@ public:
     {
         if (indice < 0 || indice >= cantidad())
         {
-            throw std::out_of_range("Indice fuera de rango en Collection");
+            throw IndiceInvalidoException(indice);
         }
-
         return elementos[indice];
     }
 

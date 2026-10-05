@@ -60,7 +60,17 @@ public:
         return mensaje.c_str();
     }
 };
+class OperacionInvalidaException : public exception {
+private:
+    string mensaje;
+public:
+    OperacionInvalidaException(const string& detalle)
+        : mensaje("Operacion invalida: " + detalle) {}
 
+    const char* what() const noexcept override {
+        return mensaje.c_str();
+    }
+};
 // Se lanza cuando el usuario escribe algo que no corresponde al tipo pedido
 // (por ejemplo, una letra cuando se espera un numero).
 class EntradaInvalidaException : public exception {

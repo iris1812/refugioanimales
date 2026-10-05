@@ -13,7 +13,7 @@ private:
     int edad;
     string estadoSalud;      // ej: "Sano", "En tratamiento"
     bool disponibleAdopcion; // true = se puede adoptar, false = no
-
+    static int instanciasVivas;
 public:
 
     // 1) Constructor por defecto: se usa si escribís  Animal a;
@@ -52,6 +52,7 @@ public:
 
     // Sobrecarga del operador unario ! para ver si NO está disponible
     bool operator!() const;
+    static int getInstanciasVivas();
 };
 
 #endif

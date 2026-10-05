@@ -1,10 +1,7 @@
-
-#ifndef MENU_H  
+#ifndef MENU_H
 #define MENU_H
-void probarTemplates();
 
 void mostrarMenu();
-
 int leerOpcion();
 
 void registrarAnimal();
@@ -15,5 +12,8 @@ void gestionarSolicitud();
 void devolverAnimal();
 void mostrarHistorial();
 void mostrarSolicitudes();
+void listarAdoptantes();
+void probarTemplates();
+void probarCopiaProfunda();
 
 #endif
