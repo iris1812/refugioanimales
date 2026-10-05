@@ -6,8 +6,17 @@
 #include "refugio.h"
 #include "Perro.h"
 #include "Gato.h"
+#include "Collection.h"
 
 using namespace std;
+
+template <typename T>
+void mostrarCantidad(const Collection<T>& coleccion)
+{
+    cout << "Cantidad de elementos: "
+         << coleccion.cantidad()
+         << endl;
+}
 
 namespace {
 Refugio refugio;
@@ -24,6 +33,7 @@ void mostrarMenu() {
     cout << "6. Devolver animal a disponible" << endl;
     cout << "7. Mostrar historial" << endl;
     cout << "8. Mostrar solicitudes" << endl;
+    cout << "9. Probar templates\n";
     cout << "0. Salir" << endl;
     cout << "Elegi una opcion: ";
 }
@@ -199,4 +209,16 @@ void mostrarHistorial() {
 
 void mostrarSolicitudes() {
     refugio.mostrarSolicitudes();
+}
+
+void probarTemplates() {
+    Collection<int> numeros;
+    numeros.agregar(10);
+    numeros.agregar(20);
+
+    mostrarCantidad(numeros);
+    cout << "Primer elemento: " << numeros[0] << endl;
+    cout << "Colecciones creadas: "
+         << Collection<int>::obtenerCantidadColecciones()
+         << endl;
 }

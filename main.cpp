@@ -29,6 +29,9 @@ int main() {
             case 8:
                 mostrarSolicitudes();
                 break;
+            case 9:
+                probarTemplates();
+                break;
             case 0:
                 // No hacemos nada acá: el "0" corta el do-while más abajo.
                 break;
