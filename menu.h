@@ -13,7 +13,5 @@ void devolverAnimal();
 void mostrarHistorial();
 void mostrarSolicitudes();
 void listarAdoptantes();
-void probarTemplates();
-void probarCopiaProfunda();
 
 #endif

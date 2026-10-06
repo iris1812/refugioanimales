@@ -5,20 +5,10 @@
 #include "refugio.h"
 #include "Perro.h"
 #include "Gato.h"
-#include "Collection.h"
 #include "Utilidades.h"
 #include "Excepciones.h"
 
 using namespace std;
-
-// Funcion generica (template): sirve para una Collection de cualquier tipo.
-// Se usa con Collection<int> y Collection<string> en probarTemplates().
-template <typename T>
-void mostrarCantidad(const string& nombre, const Collection<T>& coleccion)
-{
-    cout << "La coleccion '" << nombre << "' tiene "
-         << coleccion.cantidad() << " elementos." << endl;
-}
 
 namespace {
 Refugio refugio;             // objeto principal del sistema
@@ -44,8 +34,6 @@ void mostrarMenu() {
     cout << "7. Mostrar historial" << endl;
     cout << "8. Mostrar solicitudes" << endl;
     cout << "9. Listar adoptantes" << endl;
-    cout << "10. Probar templates" << endl;
-    cout << "11. Prueba de copia profunda y memoria" << endl;
     cout << "0. Salir" << endl;
 }
 
@@ -164,105 +152,4 @@ void mostrarSolicitudes() {
 
 void listarAdoptantes() {
     refugio.mostrarAdoptantes();
-}
-
-// ---------------------------------------------------------------------------
-// FASE 5: prueba de templates y miembro estatico
-// ---------------------------------------------------------------------------
-void probarTemplates() {
-    cout << "\n--- PRUEBA DE TEMPLATES ---" << endl;
-
-    Collection<int> numeros;          // instanciacion 1: T = int
-    numeros.agregar(10);
-    numeros.agregar(20);
-
-    Collection<string> razas;         // instanciacion 2: T = string
-    razas.agregar("Labrador");
-    razas.agregar("Caniche");
-    razas.agregar("Mestizo");
-
-    // Funcion generica usada con dos tipos distintos
-    mostrarCantidad("numeros", numeros);   // T = int
-    mostrarCantidad("razas", razas);       // T = string
-
-    cout << "numeros[0] = " << numeros[0] << endl;
-    cout << "razas[2]   = " << razas[2] << endl;
-
-    // Indice invalido -> la coleccion lanza IndiceInvalidoException
-    try {
-        cout << "Intentando acceder a numeros[5]..." << endl;
-        cout << numeros[5] << endl;
-    } catch (const IndiceInvalidoException& e) {
-        cout << "Excepcion capturada: " << e.what() << endl;
-    }
-
-    // Miembro estatico: cada instanciacion tiene SU PROPIO contador
-    cout << "\nMiembro estatico cantidadColecciones (uno por cada tipo T):" << endl;
-    cout << "  Collection<int>       -> " << Collection<int>::obtenerCantidadColecciones() << endl;
-    cout << "  Collection<string>    -> " << Collection<string>::obtenerCantidadColecciones() << endl;
-    cout << "  Collection<Adoptante> -> " << Collection<Adoptante>::obtenerCantidadColecciones() << endl;
-    cout << "Collection<int>, Collection<string> y Collection<Adoptante> son clases\n"
-            "distintas generadas por el compilador, por eso cada una lleva su propia\n"
-            "cuenta. Las de string y Adoptante ya valen al menos 1 porque el Refugio\n"
-            "usa una para el historial y otra para los adoptantes." << endl;
-}
-
-// ---------------------------------------------------------------------------
-// Prueba de copia profunda, operador = y liberacion de memoria
-// ---------------------------------------------------------------------------
-namespace {
-void verificar(const string& descripcion, bool ok) {
-    cout << (ok ? "  [OK]    " : "  [FALLA] ") << descripcion << endl;
-}
-}
-
-void probarCopiaProfunda() {
-    cout << "\n--- PRUEBA DE COPIA PROFUNDA Y MEMORIA ---" << endl;
-    int vivosAntes = Animal::getInstanciasVivas();
-    cout << "Animales vivos en memoria antes de la prueba: " << vivosAntes << endl;
-
-    {   // bloque: al cerrar la llave se destruyen todos los refugios de prueba
-        Refugio original(2);   // capacidad 2 para forzar que el arreglo crezca
-        original.agregarAnimal(Perro(100, "Rocky", 3, "Sano", "Mestizo", "Mediano"));
-        original.agregarAnimal(Gato(101, "Michi", 2, "Sano", "Negro", true));
-        original.agregarAnimal(Perro(102, "Luna", 5, "Sano", "Labrador", "Grande")); // crece a 4
-
-        // 1) Constructor de copia
-        Refugio copia(original);
-        copia[0].setEstadoSalud("En tratamiento");
-        copia.agregarAnimal(Gato(103, "Tom", 1, "Sano", "Gris", false));
-
-        cout << "\nOriginal:" << endl;
-        original.mostrarAnimales();
-        cout << "\nCopia (modificada):" << endl;
-        copia.mostrarAnimales();
-
-        cout << "\nDireccion de original[0]: " << &original[0] << endl;
-        cout << "Direccion de copia[0]:    " << &copia[0] << endl;
-
-        verificar("Las direcciones son distintas (no se comparten punteros)", &original[0] != &copia[0]);
-        verificar("operator== compara por ID: original[0] == copia[0]", original[0] == copia[0]);
-        verificar("Cambiar la salud en la copia no cambia el original",
-                  original[0].getEstadoSalud() == "Sano");
-        verificar("Agregar a la copia no agrega al original",
-                  original.getCantidadAnimales() == 3 && copia.getCantidadAnimales() == 4);
-
-        // 2) Operador de asignacion
-        Refugio asignado;
-        asignado = original;
-        asignado[1].setDisponible(false);
-        verificar("operator=: cambiar el asignado no cambia el original",
-                  original[1].getDisponible() && !asignado[1].getDisponible());
-
-        // 3) Autoasignacion
-        asignado = asignado;
-        verificar("Autoasignacion (a = a) no rompe el objeto", asignado.getCantidadAnimales() == 3);
-
-        cout << "Animales vivos dentro del bloque: " << Animal::getInstanciasVivas() << endl;
-    }   // <- aca se llaman los destructores de original, copia y asignado
-
-    int vivosDespues = Animal::getInstanciasVivas();
-    cout << "Animales vivos despues de destruir los refugios: " << vivosDespues << endl;
-    verificar("Todos los animales creados en la prueba fueron liberados (sin fugas)",
-              vivosAntes == vivosDespues);
 }

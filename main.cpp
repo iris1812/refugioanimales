@@ -43,12 +43,6 @@ int main() {
                 case 9:
                     listarAdoptantes();
                     break;
-                case 10:
-                    probarTemplates();
-                    break;
-                case 11:
-                    probarCopiaProfunda();
-                    break;
                 case 0:
                     cout << "Saliendo del sistema..." << endl;
                     break;
