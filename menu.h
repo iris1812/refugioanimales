@@ -3,7 +3,6 @@
 
 void mostrarMenu();
 int leerOpcion();
-
 void registrarAnimal();
 void listarAnimales();
 void registrarAdoptante();
@@ -13,5 +12,4 @@ void devolverAnimal();
 void mostrarHistorial();
 void mostrarSolicitudes();
 void listarAdoptantes();
-
 #endif

@@ -3,11 +3,8 @@
 #include "Animal.h"
 int Animal::instanciasVivas = 0;
 int Animal::getInstanciasVivas() { return instanciasVivas; }
-// Fijate la sintaxis: "Animal::Animal()" significa "el constructor por defecto, QUE PERTENECE a la clase Animal".
-// El "::" se llama "operador de resolución de ámbito": conecta el nombre de la clase con el nombre de la función.
 
 Animal::Animal() {
-    // valores iniciales "por defecto"
     id = 0;
     nombre = "Sin nombre";
     edad = 0;
@@ -17,8 +14,6 @@ Animal::Animal() {
 }
 
 Animal::Animal(int idParam, string nombreParam, int edadParam, string estadoParam) {
-    // Uso "Param" en el nombre para no confundir el parámetro
-    // con el atributo de la clase que se llama igual.
     id = idParam;
     nombre = nombreParam;
     edad = edadParam;
@@ -28,9 +23,6 @@ Animal::Animal(int idParam, string nombreParam, int edadParam, string estadoPara
 }
 
 Animal::Animal(const Animal &otro) {
-    // Copiamos cada atributo del objeto "otro" hacia el objeto nuevo.
-    // Como Animal no tiene punteros propios, esto es una "copia simple": alcanza con copiar valor por valor. (En Refugio va a ser distinto, porque ahí SÍ vamos a tener memoria dinámica.)
-    id = otro.id;
     nombre = otro.nombre;
     edad = otro.edad;
     estadoSalud = otro.estadoSalud;
@@ -68,8 +60,6 @@ bool Animal::operator==(const Animal& otro) const {
     return this->id == otro.id;
 }
 
-// Sobrecarga de ! : Devuelve true si el animal NO está disponible
 bool Animal::operator!() const {
     return !this->disponibleAdopcion; 
-    // Si disponibleAdopcion es false (no disponible), !false se vuelve true.
 }

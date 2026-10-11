@@ -1,7 +1,5 @@
-
 #ifndef ADOPTANTE_H
 #define ADOPTANTE_H
-
 #include <string>
 using namespace std;
 
