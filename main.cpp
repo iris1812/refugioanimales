@@ -69,6 +69,7 @@ int main() {
             }
         }
         catch (const exception& e) {  
+            cout << "Error - Dato invalido " << e.what() << endl;
         }
     } while (opcion != 0);
     return 0;

@@ -23,6 +23,7 @@ Animal::Animal(int idParam, string nombreParam, int edadParam, string estadoPara
 }
 
 Animal::Animal(const Animal &otro) {
+    id = otro.id;
     nombre = otro.nombre;
     edad = otro.edad;
     estadoSalud = otro.estadoSalud;
