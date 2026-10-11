@@ -10,8 +10,8 @@
 using namespace std;
 
 namespace {
-Refugio refugio;             // objeto principal del sistema
-int siguienteSolicitud = 1;  // numerador automatico de solicitudes
+Refugio refugio;
+int siguienteSolicitud = 1;
 string leerLinea(const string& mensaje) {
     string texto;
     cout << mensaje;
@@ -35,7 +35,7 @@ void mostrarMenu() {
 }
 
 int leerOpcion() {
-    return leerDato<int>("Elegi una opcion: ");   // leerDato con tipo int
+    return leerDato<int>("Elegi una opcion: ");
 }
 
 void registrarAnimal() {
@@ -60,7 +60,7 @@ void registrarAnimal() {
         refugio.agregarAnimal(perro);
     } else {
         string color = leerLinea("Color de pelaje: ");
-        char interior = leerDato<char>("Es de interior? (s/n): ");   // leerDato con tipo char
+        char interior = leerDato<char>("Es de interior? (s/n): ");
         if (interior != 's' && interior != 'S' && interior != 'n' && interior != 'N') {
             throw invalid_argument("Respuesta invalida: debe ser 's' o 'n'");
         }
@@ -80,7 +80,7 @@ void listarAnimales() {
         cout << "Hay " << refugio.getCantidadAnimales() << " animales (posiciones 0 a "
             << refugio.getCantidadAnimales() - 1 << ")." << endl;
         int pos = leerDato<int>("Posicion: ");
-        refugio[pos].mostrarInfo();   // operador [] -> puede lanzar IndiceInvalidoException
+        refugio[pos].mostrarInfo();
     } else {
         cout << "Opcion invalida." << endl;
     }
@@ -99,7 +99,7 @@ void registrarAdoptante() {
 }
 void buscarAnimalPorId() {
     int id = leerDato<int>("ID del animal: ");
-    refugio.buscarAnimal(id).mostrarInfo();   // lanza NoEncontradoException si no existe
+    refugio.buscarAnimal(id).mostrarInfo();
 }
 void gestionarSolicitud() {
     int accion = leerDato<int>("1. Crear\n2. Confirmar\n3. Cancelar\nOpcion: ");

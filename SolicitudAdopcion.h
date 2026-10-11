@@ -8,9 +8,9 @@ using namespace std;
 class SolicitudAdopcion {
 private:
     int idSolicitud;
-    Adoptante solicitante;      // Usamos la clase que ya creaste
+    Adoptante solicitante;
     unique_ptr<Animal> animalSolicitado;
-    string estado;              // Ej: "En revisión", "Aprobada", "Rechazada"
+    string estado;
     
 public:
     SolicitudAdopcion();

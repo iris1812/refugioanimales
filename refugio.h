@@ -13,24 +13,24 @@ private:
     Animal** animales;
     int cantidad;
     int capacidad;
-    Collection<Adoptante> adoptantes;             // template con tipo Adoptante
+    Collection<Adoptante> adoptantes;
     std::vector<SolicitudAdopcion> solicitudes;
-    Collection<std::string> historial;            // template con tipo string
+    Collection<std::string> historial;
     SolicitudAdopcion& buscarSolicitud(int idSolicitud);
 
 public:
-    Refugio();                                 // por defecto
-    Refugio(int capacidadInicial);             // parametrizado
-    Refugio(const Refugio& otro);              // de copia (copia profunda)
+    Refugio();
+    Refugio(int capacidadInicial);
+    Refugio(const Refugio& otro);
     ~Refugio();
     Refugio& operator=(const Refugio& otro);
-    void agregarAnimal(const Animal& animal);     // lanza IdRepetidoException
+    void agregarAnimal(const Animal& animal);
     void mostrarDisponibles() const;
     void mostrarAnimales() const;
     int getCantidadAnimales() const;
-    Animal& buscarAnimal(int id);                 // lanza NoEncontradoException
-    void agregarAdoptante(const Adoptante& adoptante);  // lanza IdRepetidoException
-    Adoptante* buscarAdoptante(int id);                 // devuelve nullptr si no existe
+    Animal& buscarAnimal(int id);
+    void agregarAdoptante(const Adoptante& adoptante);
+    Adoptante* buscarAdoptante(int id);
     void mostrarAdoptantes() const;
     void crearSolicitud(int idSolicitud, int idAdoptante, int idAnimal);
     void confirmarSolicitud(int idSolicitud);

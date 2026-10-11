@@ -18,7 +18,7 @@ Animal::Animal(int idParam, string nombreParam, int edadParam, string estadoPara
     nombre = nombreParam;
     edad = edadParam;
     estadoSalud = estadoParam;
-    disponibleAdopcion = true; // todo animal nuevo arranca disponible
+    disponibleAdopcion = true;
     instanciasVivas++;
 }
 

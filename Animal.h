@@ -7,8 +7,8 @@ private:
     int id;
     string nombre;
     int edad;
-    string estadoSalud;      // ej: "Sano", "En tratamiento"
-    bool disponibleAdopcion; // true = se puede adoptar, false = no
+    string estadoSalud;
+    bool disponibleAdopcion;
     static int instanciasVivas;
 public:
     Animal();

@@ -7,13 +7,13 @@ class Adoptante {
 private:
     int id;
     string nombre;
-    string contacto;      // telefono o email
-    string tipoVivienda;  // ej: "Casa con patio", "Departamento"
+    string contacto;
+    string tipoVivienda;
 
 public:
-    Adoptante();                                                  // por defecto
-    Adoptante(int id, string nombre, string contacto, string tipoVivienda); // parametrizado
-    Adoptante(const Adoptante &otro);                              // copia
+    Adoptante();
+    Adoptante(int id, string nombre, string contacto, string tipoVivienda);
+    Adoptante(const Adoptante &otro);
     ~Adoptante();
 
     int getId() const;

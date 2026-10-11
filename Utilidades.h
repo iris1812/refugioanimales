@@ -11,14 +11,14 @@ T leerDato(const string& mensaje) {
     T valor;
     cout << mensaje;
     if (!(cin >> valor)) {
-        if (cin.eof()) {               // se terminó la entrada
+        if (cin.eof()) {
             throw EntradaInvalidaException();
         }
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         throw EntradaInvalidaException();
     }
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // descarta el resto de la línea
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     return valor;
 }
 

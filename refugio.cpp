@@ -6,12 +6,12 @@ using namespace std;
 Refugio::Refugio() {
     cantidad = 0;
     capacidad = 5;
-    animales = new Animal*[capacidad]();   // CREA: Refugio
+    animales = new Animal*[capacidad]();
 }
 Refugio::Refugio(int capacidadInicial) {
     cantidad = 0;
     capacidad = capacidadInicial > 0 ? capacidadInicial : 5;
-    animales = new Animal*[capacidad]();   // CREA: Refugio
+    animales = new Animal*[capacidad]();
 }
 Refugio::Refugio(const Refugio& otro)
     : cantidad(otro.cantidad), capacidad(otro.capacidad),
@@ -36,9 +36,9 @@ Refugio& Refugio::operator=(const Refugio& otro) {
 }
 Refugio::~Refugio() {
     for (int i = 0; i < cantidad; i++) {
-        delete animales[i];      // LIBERA: cada Perro/Gato (destructor virtual)
+        delete animales[i];
     }
-    delete[] animales;           // LIBERA: el arreglo de punteros
+    delete[] animales;
     animales = nullptr;
 }
 void Refugio::agregarAnimal(const Animal& animal) {
@@ -49,9 +49,9 @@ void Refugio::agregarAnimal(const Animal& animal) {
         int nuevaCapacidad = capacidad * 2;
         Animal** nuevosAnimales = new Animal*[nuevaCapacidad]();
         for (int i = 0; i < cantidad; i++) {
-            nuevosAnimales[i] = animales[i];   // se pasan los punteros
+            nuevosAnimales[i] = animales[i];
         }
-        delete[] animales;                     // libera solo el arreglo viejo
+        delete[] animales;
         animales = nuevosAnimales;
         capacidad = nuevaCapacidad;
     }
@@ -74,7 +74,7 @@ void Refugio::mostrarDisponibles() const {
     cout << "--- ANIMALES DISPONIBLES ---" << endl;
     int mostrados = 0;
     for (int i = 0; i < cantidad; i++) {
-        if (!(*animales[i])) {   // operador ! : true si NO esta disponible
+        if (!(*animales[i])) {
             continue;
         }
         animales[i]->mostrarInfo();
@@ -159,12 +159,12 @@ void Refugio::crearSolicitud(int idSolicitud, int idAdoptante, int idAnimal) {
     if (adoptante == nullptr) {
         throw NoEncontradoException("un adoptante", idAdoptante);
     }
-    Animal& animal = buscarAnimal(idAnimal);          // puede lanzar NoEncontrado
-    if (!animal) {                                    // operador ! : no disponible
+    Animal& animal = buscarAnimal(idAnimal);
+    if (!animal) {
         throw AnimalNoDisponibleException(idAnimal);
     }
     solicitudes.emplace_back(idSolicitud, *adoptante, animal, "Pendiente");
-    animal.setDisponible(false);   // queda reservado mientras la solicitud esta pendiente
+    animal.setDisponible(false);
     historial.agregar("Solicitud " + to_string(idSolicitud) + " creada: " +
                     adoptante->getNombre() + " pide adoptar a " + animal.getNombre() + ".");
 }
@@ -196,7 +196,7 @@ void Refugio::cancelarSolicitud(int idSolicitud) {
     }
 }
 void Refugio::devolverAnimal(int idAnimal) {
-    Animal& animal = buscarAnimal(idAnimal);   // puede lanzar NoEncontrado
+    Animal& animal = buscarAnimal(idAnimal);
 
     for (SolicitudAdopcion& s : solicitudes) {
         if (s.getIdAnimal() == idAnimal && s.getEstado() == "Confirmada") {

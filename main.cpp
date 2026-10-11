@@ -59,7 +59,7 @@ int main() {
             cout << "Error - No encontrado " << e.what() << endl;
         }
         catch (const OperacionInvalidaException& e) {
-            cout << "Error - Operacion invalida " << e.what() << endl;
+            cout << "Error - " << e.what() << endl;
         }
         catch (const EntradaInvalidaException& e) {
             cout << "Error - Entrada invalida " << e.what() << endl;
