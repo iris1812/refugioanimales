@@ -47,6 +47,14 @@ El refugio esta formado por entidades del mundo real (animales, adoptantes y sol
 - Las excepciones propias heredan de std::exception. leerDato<T> lanza EntradaInvalidaException si se ingresa, por ejemplo, una letra donde va un numero, y asi se evita un bucle infinito con cin.
 - Animal::instanciasVivas es un miembro estatico que cuenta los animales existentes, y se usa para comprobar que no hay fugas de memoria.
 
+## Gestion de memoria: quien crea y quien libera cada bloque
+- Arreglo de punteros Animal** animales: lo crean los constructores de Refugio con new Animal*[capacidad]. Cuando se llena, Refugio::agregarAnimal() crea un arreglo nuevo del doble de tamanio, copia los punteros y libera el viejo con delete[]. El constructor de copia de Refugio crea su propio arreglo. Lo libera ~Refugio() con delete[].
+- Cada animal del catalogo (Perro o Gato): lo crea clone() con new, llamado desde Refugio::agregarAnimal() y desde el constructor de copia de Refugio (copia profunda). El refugio es el dueño de esos animales: ~Refugio() los libera uno por uno con delete antes de liberar el arreglo. Como el destructor de Animal es virtual, se ejecuta el destructor correcto de Perro o Gato.
+- Operador de asignacion de Refugio: crea una copia temporal (que hace sus propios clone()) e intercambia los datos con ella. Al terminar la funcion se destruye la copia temporal, y con ella se liberan los animales y el arreglo viejos.
+- Animal de cada SolicitudAdopcion: lo crea clone() en el constructor de SolicitudAdopcion y en su constructor de copia. Se guarda en un unique_ptr, que lo libera automaticamente cuando se destruye la solicitud, por lo que no hace falta un delete manual.
+- Animales temporales del menu: en registrarAnimal() el Perro o el Gato se crea como variable local (sin new). El refugio guarda una copia hecha con clone(), y la variable local se destruye sola al salir de la funcion.
+- Collection<T> (adoptantes e historial) y std::vector (solicitudes): guardan los elementos por valor y manejan su memoria internamente, asi que se liberan solas cuando se destruye el Refugio.
+
 ## Compilacion y uso
 Requiere un compilador de C++11 o superior (por ejemplo g++).
 Para compilar:
@@ -72,35 +80,4 @@ Para ejecutar en Linux o macOS:
 Si se ingresa un dato invalido, el programa muestra el error y vuelve al menu.
 
 ## Miembro estatico de Collection<T>
-Collection<T> tiene el miembro estatico cantidadColecciones, que cuenta las colecciones creadas (las copias tambien cuentan). Como Collection es una plantilla, el compilador genera una clase distinta por cada tipo T: Collection<int>, Collection<string> y Collection<Adoptante> son clases diferentes, y cada una tiene su propio contador, independiente de los demas. Al crear o copiar una coleccion de un tipo, aumenta solo el contador de ese tipo. Se consulta con obtenerCantidadColecciones().
-
-En el sistema, Refugio usa una Collection<Adoptante> y una Collection<string> (el historial). Por eso cada Refugio que se crea o se copia suma uno a esos dos contadores y no al de int.
-
-## Casos de prueba
-Situaciones validas:
-- Registrar un perro y un gato.
-- Registrar un adoptante.
-- Listar todos los animales y filtrar los disponibles.
-- Buscar un animal por ID y ver un animal por posicion.
-- Crear una solicitud (el animal queda reservado), confirmarla y verla en las solicitudes y en el historial.
-- Cancelar una solicitud (el animal vuelve a estar disponible).
-- Devolver un animal adoptado.
-
-Situaciones de error:
-- ID repetido de animal o de adoptante.
-- Tipo de animal invalido, edad negativa o respuesta distinta de s o n.
-- Crear una solicitud sobre un animal no disponible, o con un animal o un adoptante inexistente.
-- Confirmar o cancelar una solicitud inexistente o que ya no esta pendiente.
-- Devolver un animal inexistente o sin adopcion confirmada.
-- Posicion invalida al ver un animal por posicion.
-- Letras donde se espera un numero.
-
-Copia profunda y liberacion de memoria:
-- Copiar un Refugio con el constructor de copia y con el operador de asignacion: la copia es independiente del original.
-- Autoasignacion de un Refugio.
-- Al destruir los refugios no queda ningun animal sin liberar (el contador instanciasVivas vuelve al valor inicial).
-
-El detalle de cada prueba, con los pasos y los resultados, esta en el documento de pruebas.
-
-## Pseudocodigo y diagramas
-El pseudocodigo y los diagramas de flujo de cada opcion estan en el documento del trabajo.
+Collection<T> tiene el miembro estatico cantidadColecciones, que cuenta las colecciones creadas (las copias tambien cuentan). Como Collection es una plantilla, el compilador genera una clase distinta por cada tipo T: Collection<int>, Collection<string> y Collection<Adoptante> son clases diferentes, y cada una tiene su propio contador, independiente de los demas. Al crear o copiar una coleccion de un tipo, aumenta
