@@ -71,5 +71,36 @@ Para ejecutar en Linux o macOS:
 
 Si se ingresa un dato invalido, el programa muestra el error y vuelve al menu.
 
-## Pruebas, pseudocodigo y diagramas
-Las pruebas de situaciones validas y de error, la copia profunda, la liberacion de memoria, el pseudocodigo y los diagramas de flujo estan en el documento del trabajo.
+## Miembro estatico de Collection<T>
+Collection<T> tiene el miembro estatico cantidadColecciones, que cuenta las colecciones creadas (las copias tambien cuentan). Como Collection es una plantilla, el compilador genera una clase distinta por cada tipo T: Collection<int>, Collection<string> y Collection<Adoptante> son clases diferentes, y cada una tiene su propio contador, independiente de los demas. Al crear o copiar una coleccion de un tipo, aumenta solo el contador de ese tipo. Se consulta con obtenerCantidadColecciones().
+
+En el sistema, Refugio usa una Collection<Adoptante> y una Collection<string> (el historial). Por eso cada Refugio que se crea o se copia suma uno a esos dos contadores y no al de int.
+
+## Casos de prueba
+Situaciones validas:
+- Registrar un perro y un gato.
+- Registrar un adoptante.
+- Listar todos los animales y filtrar los disponibles.
+- Buscar un animal por ID y ver un animal por posicion.
+- Crear una solicitud (el animal queda reservado), confirmarla y verla en las solicitudes y en el historial.
+- Cancelar una solicitud (el animal vuelve a estar disponible).
+- Devolver un animal adoptado.
+
+Situaciones de error:
+- ID repetido de animal o de adoptante.
+- Tipo de animal invalido, edad negativa o respuesta distinta de s o n.
+- Crear una solicitud sobre un animal no disponible, o con un animal o un adoptante inexistente.
+- Confirmar o cancelar una solicitud inexistente o que ya no esta pendiente.
+- Devolver un animal inexistente o sin adopcion confirmada.
+- Posicion invalida al ver un animal por posicion.
+- Letras donde se espera un numero.
+
+Copia profunda y liberacion de memoria:
+- Copiar un Refugio con el constructor de copia y con el operador de asignacion: la copia es independiente del original.
+- Autoasignacion de un Refugio.
+- Al destruir los refugios no queda ningun animal sin liberar (el contador instanciasVivas vuelve al valor inicial).
+
+El detalle de cada prueba, con los pasos y los resultados, esta en el documento de pruebas.
+
+## Pseudocodigo y diagramas
+El pseudocodigo y los diagramas de flujo de cada opcion estan en el documento del trabajo.
