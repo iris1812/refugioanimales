@@ -47,29 +47,29 @@ int main() {
             }
         }
         catch (const IdRepetidoException& e) {
-            cout << "Error - ID repetido " << e.what() << endl;
+            cout << "Error - " << e.what() << endl;
         }
         catch (const AnimalNoDisponibleException& e) {
-            cout << "Error - No disponible " << e.what() << endl;
+            cout << "Error -" << e.what() << endl;
         }
         catch (const IndiceInvalidoException& e) {
-            cout << "Error - Indice invalido " << e.what() << endl;
+            cout << "Error -  " << e.what() << endl;
         }
         catch (const NoEncontradoException& e) {
-            cout << "Error - No encontrado " << e.what() << endl;
+            cout << "Error - " << e.what() << endl;
         }
         catch (const OperacionInvalidaException& e) {
             cout << "Error - " << e.what() << endl;
         }
         catch (const EntradaInvalidaException& e) {
-            cout << "Error - Entrada invalida " << e.what() << endl;
+            cout << "Error - " << e.what() << endl;
             opcion = -1;           
             if (cin.eof()) {       
                 opcion = 0;
             }
         }
         catch (const exception& e) {  
-            cout << "Error - Dato invalido " << e.what() << endl;
+            cout << "Error - " << e.what() << endl;
         }
     } while (opcion != 0);
     return 0;

@@ -58,9 +58,9 @@ int vivosAntes = Animal::getInstanciasVivas();
 cout << "Animales vivos en memoria antes de la prueba: " << vivosAntes << endl;
 {
 Refugio original(2);
-original.agregarAnimal(Perro(100, "Rocky", 3, "Sano", "Mestizo", "Mediano"));
-original.agregarAnimal(Gato(101, "Michi", 2, "Sano", "Negro", true));
-original.agregarAnimal(Perro(102, "Luna", 5, "Sano", "Labrador", "Grande"));
+original.agregarAnimal(Perro(100, "Milo", 3, "Sano", "Mestizo", "Mediano"));
+original.agregarAnimal(Gato(101, "Ellie", 2, "Sano", "Negro", true));
+original.agregarAnimal(Perro(102, "Leyla", 5, "Sano", "Labrador", "Grande"));
 
 Refugio copia(original);
 copia[0].setEstadoSalud("En tratamiento");

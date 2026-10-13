@@ -1,5 +1,5 @@
 # Sistema de Gestion de un Refugio de Animales
-Trabajo Practico Integrador - Programacion Orientada a Objetos 2026 (UCC)
+Trabajo Practico Integrador - Programacion Orientada a Objetos 2026
 
 ## Integrantes
 - Maccagno, Iris
@@ -7,11 +7,11 @@ Trabajo Practico Integrador - Programacion Orientada a Objetos 2026 (UCC)
 - Molina, Guadalupe
 
 ## Descripcion
-Programa de consola que gestiona un refugio de animales. Permite registrar perros y gatos, registrar adoptantes, crear, confirmar y cancelar solicitudes de adopcion, devolver animales y consultar el historial.
+Programa que gestiona un refugio de animales. Permite registrar perros y gatos, registrar adoptantes, crear, confirmar y cancelar solicitudes de adopcion, devolver animales y consultar el historial.
 Cada animal tiene ID, nombre, edad, estado de salud y estado de adopcion. El perro agrega raza y tamanio. El gato agrega color de pelaje y si es de interior o exterior.
 
 ## Por que el problema se adapta al paradigma orientado a objetos
-El refugio esta formado por entidades del mundo real (animales, adoptantes y solicitudes) que tienen datos y comportamiento propios. El paradigma orientado a objetos permite modelar cada una como una clase:
+El refugio esta formado por entidades realess (animales, adoptantes y solicitudes) que tienen datos y comportamiento propios. El paradigma orientado a objetos permite modelar cada una como una clase:
 - Abstraccion y encapsulamiento: cada entidad es una clase con atributos privados y una interfaz publica. Por ejemplo, la disponibilidad de un animal solo se cambia con setDisponible().
 - Herencia y polimorfismo: perros y gatos comparten datos y operaciones (clase base Animal) pero se muestran distinto. El refugio guarda un unico catalogo de punteros a Animal y llama a mostrarInfo() sin saber de que tipo es cada uno.
 - Composicion: Refugio contiene adoptantes y solicitudes, y cada SolicitudAdopcion contiene un Adoptante y un animal. Esto reproduce como se relacionan estas entidades en la realidad.
@@ -31,7 +31,7 @@ El refugio esta formado por entidades del mundo real (animales, adoptantes y sol
 - pseudocodigo.psc: pseudocodigo del menu principal.
 
 ## Ubicacion de fases 
-- Fase 1: este README, el pseudocodigo, los diagramas de flujo (en el documento del trabajo) y el esqueleto de archivos .h y .cpp.
+- Fase 1: este README, el pseudocodigo, los diagramas de flujo y el esqueleto de archivos .h y .cpp.
 - Fase 2: Refugio administra un arreglo dinamico Animal** y lo recorre con aritmetica de punteros en Refugio::mostrarAnimales().
 - Fase 3: constructor de copia, operador de asignacion y destructor en Refugio y en SolicitudAdopcion. Operadores == y ! en Animal, y operadores [] y () en Refugio.
 - Fase 4: Animal es abstracta, Perro y Gato heredan de ella, y el catalogo es un unico arreglo de Animal*. Refugio y SolicitudAdopcion usan composicion.
@@ -39,7 +39,7 @@ El refugio esta formado por entidades del mundo real (animales, adoptantes y sol
 
 ## Decisiones de diseno
 - clone() funciona como constructor virtual. Para copiar un animal a traves de un puntero a Animal, cada clase derivada implementa clone(), que devuelve una copia del tipo real (Perro o Gato). Se usa al registrar animales y en la copia profunda. Al ser virtual puro, tambien es lo que hace abstracta a Animal.
-- Un unico catalogo polimorfico. Refugio guarda un arreglo dinamico de Animal* que duplica su capacidad cuando se llena.
+- Un unico catalogo. Refugio guarda un arreglo dinamico de Animal* que duplica su capacidad cuando se llena.
 - Adoptantes e historial usan Collection<T>. Las solicitudes usan std::vector. Los dos manejan su propia memoria.
 - Estados de una solicitud: Pendiente, Confirmada, Cancelada y Devuelta.
 - Al crear una solicitud, el animal pasa a no disponible (queda reservado). Si se cancela, vuelve a estar disponible. Si se confirma, queda no disponible hasta que se lo devuelve.
@@ -107,6 +107,3 @@ Copia profunda y liberacion de memoria:
 - Al destruir los refugios no queda ningun animal sin liberar (el contador instanciasVivas vuelve al valor inicial).
 
 El detalle de cada prueba, con los pasos y los resultados, esta en el documento de pruebas.
-
-## Pseudocodigo y diagramas
-El pseudocodigo y los diagramas de flujo de cada opcion estan en el documento del trabajo.
