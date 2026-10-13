@@ -5,7 +5,6 @@
 #include <limits>
 #include "Excepciones.h"
 using namespace std;
-
 template <typename T>
 T leerDato(const string& mensaje) {
     T valor;
@@ -21,5 +20,4 @@ T leerDato(const string& mensaje) {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     return valor;
 }
-
 #endif

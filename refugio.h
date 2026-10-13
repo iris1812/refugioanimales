@@ -1,6 +1,5 @@
 #ifndef REFUGIO_H
 #define REFUGIO_H
-
 #include "Animal.h"
 #include "Adoptante.h"
 #include "SolicitudAdopcion.h"
@@ -17,7 +16,6 @@ private:
     std::vector<SolicitudAdopcion> solicitudes;
     Collection<std::string> historial;
     SolicitudAdopcion& buscarSolicitud(int idSolicitud);
-
 public:
     Refugio();
     Refugio(int capacidadInicial);

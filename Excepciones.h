@@ -3,7 +3,6 @@
 #include <exception>
 #include <string>
 using namespace std;
-
 class IdRepetidoException : public exception {
 private:
     string mensaje;
@@ -20,7 +19,6 @@ private:
 public:
     IndiceInvalidoException(int indice)
         : mensaje("Indice invalido: " + to_string(indice)) {}
-
     const char* what() const noexcept override {
         return mensaje.c_str();
     }
@@ -61,5 +59,4 @@ public:
         return "Entrada invalida: el dato ingresado no tiene el formato esperado";
     }
 };
-
 #endif

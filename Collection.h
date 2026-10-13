@@ -3,6 +3,7 @@
 #include <vector>
 #include "Excepciones.h"
 template <typename T>
+
 class Collection
 {
 private:
@@ -37,7 +38,6 @@ public:
         }
         return elementos[indice];
     }
-
     static int obtenerCantidadColecciones() {
         return cantidadColecciones;
     }

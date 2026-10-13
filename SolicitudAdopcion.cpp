@@ -32,7 +32,6 @@ int SolicitudAdopcion::getIdSolicitud() const {
 string SolicitudAdopcion::getEstado() const {
     return estado;
 }
-
 void SolicitudAdopcion::mostrarSolicitud() const {
     cout << "=== Solicitud Nro: " << idSolicitud << " ===" << endl;
     cout << "Estado: " << estado << endl;
@@ -46,7 +45,6 @@ void SolicitudAdopcion::mostrarSolicitud() const {
 void SolicitudAdopcion::setEstado(string nuevoEstado) {
     estado = nuevoEstado;
 }
-
 int SolicitudAdopcion::getIdAnimal() const {
     if (animalSolicitado == nullptr) {
         return -1;

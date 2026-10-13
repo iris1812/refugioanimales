@@ -11,7 +11,6 @@ private:
     Adoptante solicitante;
     unique_ptr<Animal> animalSolicitado;
     string estado;
-    
 public:
     SolicitudAdopcion();
     SolicitudAdopcion(int id, const Adoptante& adoptanteParam, const Animal& animalParam, string estadoParam);

@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include "Animal.h"
 int Animal::instanciasVivas = 0;
@@ -12,7 +11,6 @@ Animal::Animal() {
     disponibleAdopcion = true;
     instanciasVivas++;
 }
-
 Animal::Animal(int idParam, string nombreParam, int edadParam, string estadoParam) {
     id = idParam;
     nombre = nombreParam;
@@ -21,7 +19,6 @@ Animal::Animal(int idParam, string nombreParam, int edadParam, string estadoPara
     disponibleAdopcion = true;
     instanciasVivas++;
 }
-
 Animal::Animal(const Animal &otro) {
     id = otro.id;
     nombre = otro.nombre;
@@ -30,25 +27,20 @@ Animal::Animal(const Animal &otro) {
     disponibleAdopcion = otro.disponibleAdopcion;
     instanciasVivas++;
 }
-
 Animal::~Animal() {
     instanciasVivas--;
 }
-
 int Animal::getId() const { return id; }
 string Animal::getNombre() const { return nombre; }
 int Animal::getEdad() const { return edad; }
 string Animal::getEstadoSalud() const { return estadoSalud; }
 bool Animal::getDisponible() const { return disponibleAdopcion; }
-
 void Animal::setEstadoSalud(string nuevoEstado) {
     estadoSalud = nuevoEstado;
 }
-
 void Animal::setDisponible(bool valor) {
     disponibleAdopcion = valor;
 }
-
 void Animal::mostrarInfo() const {
     cout << "ID: " << id
         << " Nombre: " << nombre
@@ -60,7 +52,6 @@ void Animal::mostrarInfo() const {
 bool Animal::operator==(const Animal& otro) const {
     return this->id == otro.id;
 }
-
 bool Animal::operator!() const {
     return !this->disponibleAdopcion; 
 }

@@ -19,7 +19,6 @@ string leerLinea(const string& mensaje) {
     return texto;
     }
 }
-
 void mostrarMenu() {
     cout << "\nREFUGIO DE ANIMALES" << endl;
     cout << "1. Registrar perro o gato" << endl;
@@ -33,11 +32,9 @@ void mostrarMenu() {
     cout << "9. Listar adoptantes" << endl;
     cout << "0. Salir" << endl;
 }
-
 int leerOpcion() {
     return leerDato<int>("Elegi una opcion: ");
 }
-
 void registrarAnimal() {
     int tipo = leerDato<int>("1. Perro\n2. Gato\nTipo: ");
     if (tipo != 1 && tipo != 2) {
@@ -69,7 +66,6 @@ void registrarAnimal() {
     }
     cout << "Animal registrado." << endl;
 }
-
 void listarAnimales() {
     int filtro = leerDato<int>("1. Todos\n2. Solo disponibles\n3. Ver animal por posicion\nOpcion: ");
     if (filtro == 1) {
