@@ -2,7 +2,7 @@
 // Tiene su propio main y se compila aparte del sistema (no forma parte del menu).
 // Compilar desde la carpeta del proyecto:
 //  g++ -I. Pruebas/pruebas.cpp refugio.cpp Animal.cpp Adoptante.cpp Gato.cpp Perro.cpp SolicitudAdopcion.cpp -o pruebas_exe
-// .\pruebas_exe.exe
+// ./pruebas_exe.exe
 
 #include <iostream>
 #include <string>
