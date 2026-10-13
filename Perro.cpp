@@ -6,7 +6,7 @@ Perro::Perro(int id, string nombre, int edad, string salud, string raza, string 
 void Perro::mostrarInfo() const {
     Animal::mostrarInfo();
     std::cout << "  Tipo: Perro | Raza: " << raza
-            << " | Tamaño: " << tamanio << std::endl;
+            << " | Tamanio: " << tamanio << std::endl;
 }
 Animal* Perro::clone() const {
     return new Perro(*this);
